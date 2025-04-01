@@ -1,16 +1,18 @@
 import os
-
 import streamlit as st
 from vanna.remote import VannaDefault
 from vanna_core import initialize_vanna, MyVanna
+from dotenv import load_dotenv
+load_dotenv()
+
 @st.cache_resource(ttl=3600)
 def setup_vanna():
     vn = initialize_vanna(
-    host="localhost",
-    dbname="hotel",
-    user="root",
-    password="vipul0818",  # Replace with your password
-    port=3306,
+    host=os.getenv('host', ''),
+    dbname=os.getenv('dbname', ''),
+    user=os.getenv('user', ''),
+    password=os.getenv('password', ''),
+    port=os.getenv('port', ''),
 )
     return vn
 

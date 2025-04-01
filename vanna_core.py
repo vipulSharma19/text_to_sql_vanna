@@ -1,12 +1,16 @@
+import os
+
 from vanna.chromadb import ChromaDB_VectorStore
 from vanna.google import GoogleGeminiChat
 import base64
 import pandas as pd
+from dotenv import load_dotenv
+load_dotenv()
 
 class MyVanna(ChromaDB_VectorStore, GoogleGeminiChat):
     def __init__(self, config=None):
         ChromaDB_VectorStore.__init__(self, config=config)
-        GoogleGeminiChat.__init__(self, config={'api_key': '', 'model': 'gemini-2.0-flash'})
+        GoogleGeminiChat.__init__(self, config={'api_key': os.getenv("API_KEY"), 'model': os.getenv("model")})
 
     def setup_database(self, host, dbname, user, password, port=3306):
         self.connect_to_mysql(host=host, dbname=dbname, user=user, password=password, port=port)
